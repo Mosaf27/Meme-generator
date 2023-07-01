@@ -1,95 +1,62 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client'
 
-export default function Home() {
+import styles from '@/app/styles/common.module.css'
+import MemeCard from './components/MemeCard';
+import { useState } from 'react';
+
+
+
+
+
+
+const Page = () => {
+
+  const [data, setData] = useState();
+  const [showContent, setShowContent] = useState(false);
+  const [style, setStyle] = useState(true);
+
+ async function handleClick (){
+
+
+    const url = 'https://programming-memes-images.p.rapidapi.com/v1/memes';
+
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '6a12c86850msh2262886bdeaca9ap149d47jsn07a22744e5ca',
+      'X-RapidAPI-Host': 'programming-memes-images.p.rapidapi.com'
+    }
+  };
+  
+
+    const response = await fetch(url, options);  /* fetch data from the url */
+    const data = await response.json();          /*convert the data into json format */
+    setData(data);
+
+    setShowContent(true),
+    setStyle(false)
+    
+  }
+
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <section className={styles.section} style={{height:style ? '100vh' : ''}}>
+      <div className={styles.container}>
+      <button className={styles.button} onClick={handleClick} >
+      Get Memes
+      </button>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div className={styles.memecontainer}>
+         
+   {showContent ? 
+    data.map((meme) =>{
+      return <MemeCard key = {meme.id} image = {meme.image}/>
+    })
+ : ""
+  }
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    </section>
+  );
 }
+
+export default Page;

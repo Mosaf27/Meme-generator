@@ -1,0 +1,38 @@
+
+
+.card{
+    border-radius: 5px;
+    box-shadow:5px 5px 5px rgba(0,0,0,0.2);
+    width: 15rem;
+    height: 20rem;
+    padding: 1rem;
+    background-color: white;
+}
+
+
+.card:hover{
+    box-shadow:5px 5px 5px rgba(0,0,0,0.2);
+}
+
+
+.card img{
+    width: 12rem;
+    height:17rem;
+    padding: 1.5rem;
+}
+
+@media screen and (max-width:481px) {
+    .card{
+        border-radius: 5px;
+        box-shadow:5px 5px 5px rgba(0,0,0,0.2);
+        width: 10rem;
+        height: 15rem;
+        padding: 1rem;
+    }
+
+    .card img{
+        width: 8rem;
+        height:12rem;
+        padding: 1rem;
+    }
+}
